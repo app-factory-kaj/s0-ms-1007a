@@ -1,0 +1,14 @@
+{
+  "name": "greeter",
+  "type": "service",
+  "version": "0.1.0",
+  "language": "Go",
+  "buildpack": "docker",
+  "appPath": "greeter",
+  "entrypoint": "deployment/service",
+  "exposure": "internet",
+  "dependencies": [],
+  "description": "A minimal Go HTTP service that returns a personalized JSON greeting for a name supplied on the request, defaulting to \"World\" when omitted. It is stateless: it stores nothing and has no sign-in. It follows the layout and error conventions of app-factory-kaj/e2e-reference (cmd/<service>/main.go entrypoint, internal/<pkg> for logic, JSON errors as {\"error\": \"message\"}). It does not persist, log history, or expose any endpoint beyond the one greeting lookup.",
+  "stories": ["F1.1", "F1.2"],
+  "skillsPinned": ["openapi-conventions", "go"]
+}

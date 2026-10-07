@@ -21,3 +21,4 @@ conventions of the `app-factory-kaj/e2e-reference` repository. \[idea\]
 
 - Any greeting language or format other than a single JSON message.
 - Rate limiting or quotas on the endpoint.
+

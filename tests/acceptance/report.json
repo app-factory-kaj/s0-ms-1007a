@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-07T16:21:37Z",
-  "commit": "a6faba76658a8726f6c40974acb696c30d9b76c7",
+  "generatedAt": "2026-10-07T16:29:31Z",
+  "commit": "7d8eb0bd81e99727bd36dee441cd8d218ba6adb3",
   "baseUrl": "http://development-default.openchoreoapis.localhost:19080/s0-ms-1007a-greeter-http",
-  "isolation": "stateless API with no shared state; each scenario issues its own request and asserts only on that response",
+  "isolation": "Greeter is a stateless API with no stored data; each scenario issues its own independent request and asserts only on that request's response.",
   "scenarios": [
     {
       "feature": "F1 Greeting",
@@ -12,22 +12,21 @@
       "rule": "A caller who supplies a name receives a greeting for that name",
       "scenario": "An API caller greets by name",
       "tags": ["@story-F1.1"],
-      "outcome": "blocked",
+      "outcome": "passed",
       "steps": [
-        {
-          "text": "the Greeter service is running",
-          "keyword": "Given",
-          "command": "curl -s -i \"http://development-default.openchoreoapis.localhost:19080/s0-ms-1007a-greeter-http/hello\"",
-          "exit": 0,
-          "observed": "HTTP/1.1 503 Service Unavailable, body \"no healthy upstream\" (envoy gateway) — confirmed on 3 retries over 6s; the deployed Greeter service has no healthy backend"
-        }
+        { "text": "the Greeter service is running", "keyword": "Given",
+          "command": "curl -s -o /dev/null -w \"%{http_code}\" \"$BASE/hello\"",
+          "exit": 0, "observed": "200" },
+        { "text": "Ada sends a GET request to \"/hello?name=Ada\"", "keyword": "When",
+          "command": "curl -s -D /tmp/h1.txt -o /tmp/b1.json \"$BASE/hello?name=Ada\"",
+          "exit": 0, "observed": "HTTP/1.1 200 OK" },
+        { "text": "the response is a JSON greeting that includes \"Ada\"", "keyword": "Then",
+          "command": "grep -i 'content-type: application/json' /tmp/h1.txt && grep -q Ada /tmp/b1.json",
+          "exit": 0, "observed": "{\"message\":\"Hello, Ada!\",\"name\":\"Ada\"}" }
       ],
       "evidence": {
-        "network": [
-          { "method": "GET", "url": "/hello", "status": 503 }
-        ],
-        "console": [],
-        "snapshot": "no healthy upstream"
+        "network": [{ "method": "GET", "url": "/hello?name=Ada", "status": 200 }],
+        "console": []
       }
     },
     {
@@ -37,22 +36,21 @@
       "rule": "A caller who omits the name receives a default greeting for \"World\"",
       "scenario": "An API caller omits the name",
       "tags": ["@story-F1.2"],
-      "outcome": "blocked",
+      "outcome": "passed",
       "steps": [
-        {
-          "text": "the Greeter service is running",
-          "keyword": "Given",
-          "command": "curl -s -i \"http://development-default.openchoreoapis.localhost:19080/s0-ms-1007a-greeter-http/hello\"",
-          "exit": 0,
-          "observed": "HTTP/1.1 503 Service Unavailable, body \"no healthy upstream\" (envoy gateway) — confirmed on 3 retries over 6s; the deployed Greeter service has no healthy backend"
-        }
+        { "text": "the Greeter service is running", "keyword": "Given",
+          "command": "curl -s -o /dev/null -w \"%{http_code}\" \"$BASE/hello\"",
+          "exit": 0, "observed": "200" },
+        { "text": "Ada sends a GET request to \"/hello\" with no \"name\" parameter", "keyword": "When",
+          "command": "curl -s -D /tmp/h2.txt -o /tmp/b2.json \"$BASE/hello\"",
+          "exit": 0, "observed": "HTTP/1.1 200 OK" },
+        { "text": "the response is a JSON greeting that includes \"World\"", "keyword": "Then",
+          "command": "grep -i 'content-type: application/json' /tmp/h2.txt && grep -q World /tmp/b2.json",
+          "exit": 0, "observed": "{\"message\":\"Hello, World!\",\"name\":\"World\"}" }
       ],
       "evidence": {
-        "network": [
-          { "method": "GET", "url": "/hello", "status": 503 }
-        ],
-        "console": [],
-        "snapshot": "no healthy upstream"
+        "network": [{ "method": "GET", "url": "/hello", "status": 200 }],
+        "console": []
       }
     }
   ]

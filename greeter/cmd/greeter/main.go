@@ -1,8 +1,7 @@
 // Command greeter starts the greeter HTTP service.
 //
-// This is foundation-only scaffolding: it wires config, the HTTP server and
-// the router bootstrap. The /hello handler itself lands in a follow-up issue
-// on top of this layout, without restructuring it.
+// It wires config, the HTTP server and the router, which serves the
+// component's GET /hello contract (see internal/server).
 package main
 
 import (

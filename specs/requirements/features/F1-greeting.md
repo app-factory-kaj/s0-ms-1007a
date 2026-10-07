@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Return a personalized JSON greeting for a name supplied on the request.
+Return a personalized JSON greeting for a name supplied on the request. E2E marker d3.
 
 ## User Stories
 

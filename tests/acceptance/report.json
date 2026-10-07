@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T16:21:37Z",
+  "commit": "a6faba76658a8726f6c40974acb696c30d9b76c7",
+  "baseUrl": "http://development-default.openchoreoapis.localhost:19080/s0-ms-1007a-greeter-http",
+  "isolation": "stateless API with no shared state; each scenario issues its own request and asserts only on that response",
+  "scenarios": [
+    {
+      "feature": "F1 Greeting",
+      "featureFile": "specs/validation/acceptance/F1-greeting.feature",
+      "line": 6,
+      "rule": "A caller who supplies a name receives a greeting for that name",
+      "scenario": "An API caller greets by name",
+      "tags": ["@story-F1.1"],
+      "outcome": "blocked",
+      "steps": [
+        {
+          "text": "the Greeter service is running",
+          "keyword": "Given",
+          "command": "curl -s -i \"http://development-default.openchoreoapis.localhost:19080/s0-ms-1007a-greeter-http/hello\"",
+          "exit": 0,
+          "observed": "HTTP/1.1 503 Service Unavailable, body \"no healthy upstream\" (envoy gateway) — confirmed on 3 retries over 6s; the deployed Greeter service has no healthy backend"
+        }
+      ],
+      "evidence": {
+        "network": [
+          { "method": "GET", "url": "/hello", "status": 503 }
+        ],
+        "console": [],
+        "snapshot": "no healthy upstream"
+      }
+    },
+    {
+      "feature": "F1 Greeting",
+      "featureFile": "specs/validation/acceptance/F1-greeting.feature",
+      "line": 14,
+      "rule": "A caller who omits the name receives a default greeting for \"World\"",
+      "scenario": "An API caller omits the name",
+      "tags": ["@story-F1.2"],
+      "outcome": "blocked",
+      "steps": [
+        {
+          "text": "the Greeter service is running",
+          "keyword": "Given",
+          "command": "curl -s -i \"http://development-default.openchoreoapis.localhost:19080/s0-ms-1007a-greeter-http/hello\"",
+          "exit": 0,
+          "observed": "HTTP/1.1 503 Service Unavailable, body \"no healthy upstream\" (envoy gateway) — confirmed on 3 retries over 6s; the deployed Greeter service has no healthy backend"
+        }
+      ],
+      "evidence": {
+        "network": [
+          { "method": "GET", "url": "/hello", "status": 503 }
+        ],
+        "console": [],
+        "snapshot": "no healthy upstream"
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@ Return a personalized JSON greeting for a name supplied on the request.
 - F1.1 As an API caller, I send a GET request to /hello with a `name` query
 parameter and receive a JSON greeting that includes that name. \[idea\]
 - F1.2 As an API caller, when I omit the `name` parameter, I receive a default
-JSON greeting addressed to "World" rather than an error. *assumed*
+JSON greeting addressed to "World" rather than an error.
 
 ## Decisions
 
